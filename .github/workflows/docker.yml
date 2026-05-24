@@ -22,7 +22,8 @@ jobs:
       run: docker rm my-api || true
 
     - name: Run new container
-      run: docker run -d \
+      run: |
+          docker run -d \
          -p 127.0.0.1:8000:8000 \
          --restart always \
          --name my-api my-api
