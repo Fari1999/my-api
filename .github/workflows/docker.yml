@@ -9,21 +9,21 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Build Docker image
-      run: docker build -t my-api .
+      - name: Build Docker image
+        run: docker build -t my-api .
 
-    - name: Stop old container
-      run: docker stop my-api || true
+      - name: Stop old container
+        run: docker stop my-api || true
 
-    - name: Remove old container
-      run: docker rm my-api || true
+      - name: Remove old container
+        run: docker rm my-api || true
 
-    - name: Run new container
-      run: |
+      - name: Run new container
+        run: |
           docker run -d \
-         -p 127.0.0.1:8000:8000 \
-         --restart always \
-         --name my-api my-api
+            -p 127.0.0.1:8000:8000 \
+            --restart always \
+            --name my-api my-api
