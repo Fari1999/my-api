@@ -15,13 +15,11 @@ jobs:
     - name: Build Docker image
       run: docker build -t my-api .
 
-    - name: Deploy to VM via SSH
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.VM_IP }}
-        username: test
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd ~/my-api
-          git pull
-          ./deploy.sh
+    - name: Stop old container
+      run: docker stop my-api || true
+
+    - name: Remove old container
+      run: docker rm my-api || true
+
+    - name: Run new container
+      run: docker run -d -p 8000:8000 --name my-api my-api
